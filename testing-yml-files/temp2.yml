@@ -1,0 +1,53 @@
+name: Yaml files validation test
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'java/**.yaml'
+      - 'java/**.yml'
+  pull_request:
+    branches: [ master ]
+    types:
+      - opened
+      - reopened
+      - synchronize
+    paths:
+      - 'java/**.yaml'
+      - 'java/**.yml'
+  # starring the repo will trigger workflow runs
+  # gives us a way to manually trigger and test the runs
+  watch:
+    types: [ started ]
+
+jobs:
+  yaml_validation_test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Validate Yaml Files
+        uses: ibiqlik/action-yamllint@v3.1.0
+        with:
+          # adding some additional rules with default rules
+          # https://yamllint.readthedocs.io/en/stable/configuration.html#default-configuration
+          config_data: |
+            extends: default
+            rules:
+              comments: disable
+              comments-indentation: disable
+              document-start: disable
+              truthy: disable
+              line-length: disable
+              indentation:
+                spaces: 2
+              brackets:
+                min-spaces-inside: 0
+                max-spaces-inside: 1
+              braces:
+                min-spaces-inside: 0
+                max-spaces-inside: 1
+
