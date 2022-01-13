@@ -1,0 +1,389 @@
+openapi: 3.0.0
+info:
+  title: retailgenics product service
+  version: 0.1.0
+  description: This service provides product details.
+components:
+  schemas:
+    CompanyEntity:
+      type: object
+      properties:
+        companyId:
+          type: integer
+          format: int64
+        companyName:
+          type: string
+        description:
+          type: string
+      required:
+        - companyId
+        - companyName
+        - description
+    ProductDetailEntity:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        productName:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        taxPercent:
+          type: number
+          format: double
+        price:
+          type: number
+          format: double
+        companyId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int64
+        discount:
+          type: number
+          format: double
+      required:
+        - productTd
+        - productName
+        - description
+        - category
+        - taxPercent
+        - price
+        - companyId
+        - quantity
+        - discount
+    ProductEntity:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        productName:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        taxPercent:
+          type: number
+          format: double
+        price:
+          type: number
+          format: double
+        companyId:
+          type: integer
+          format: int64
+      required:
+        - productTd
+        - productName
+        - description
+        - category
+        - taxPercent
+        - price
+        - companyId
+    ProductBranchRequest:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        branchId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int64
+        discount:
+          type: number
+          format: double
+      required:
+        - productId
+        - branchId
+    ProductRequest:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        productName:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        taxPercent:
+          type: number
+          format: double
+        price:
+          type: number
+          format: double
+        companyId:
+          type: integer
+          format: int64
+      required:
+        - productTd
+        - productName
+        - category
+        - taxPercent
+        - price
+        - companyId
+    CompanyRequest:
+      type: object
+      properties:
+        companyId:
+          type: integer
+          format: int64
+        companyName:
+          type: string
+        description:
+          type: string
+      required:
+        - companyId
+        - companyName
+
+paths:
+  #company
+  /company:
+    post:
+      operationId: createCompany
+      summary: create company details
+      description: create company details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Company
+    put:
+      operationId: updateCompany
+      summary: update company details
+      description: update company details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Company
+  /company/{companyId}:
+    get:
+      operationId: getCompany
+      summary: get company details
+      description: get company details
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEntity'
+        '400':
+          description: Bad Request
+      tags:
+        - Company
+    delete:
+      operationId: deleteCompany
+      summary: delete company details
+      description: delete company details
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Company
+  /company/all:
+    get:
+      operationId: getAllCompanies
+      summary: get all companies
+      description: get all companies
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyEntity'
+        '400':
+          description: Bad request
+      tags:
+        - Company
+  #product
+  /product:
+    post:
+      operationId: createProduct
+      summary: create product details
+      description: create product details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Product
+    put:
+      operationId: updateProduct
+      summary: update product details
+      description: update product details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Product
+  /product/{productId}:
+    get:
+      operationId: getProduct
+      summary: get product details
+      description: get product details
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductEntity'
+        '400':
+          description: Bad Request
+      tags:
+        - Product
+    delete:
+      operationId: deleteProduct
+      summary: delete product details
+      description: delete product details
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Product
+  /product/all:
+    get:
+      operationId: getAllProducts
+      summary: get all products
+      description: get all products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductEntity'
+        '400':
+          description: Bad request
+      tags:
+        - Product
+  /product_branch:
+    put:
+      operationId: updateProductBranch
+      summary: update productBranch details
+      description: update productBranch details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBranchRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - ProductBranch
+    get:
+      operationId: getProductBranch
+      summary: get product details for a branch
+      description: get product details for a branch
+      parameters:
+        - in: query
+          name: branchId
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - in: query
+          name: productId
+          required: false
+          schema:
+            format: int64
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDetailEntity'
+        '400':
+          description: Bad Request
+      tags:
+        - ProductBranch
+
+servers:
+  - url: http://localhost:28131

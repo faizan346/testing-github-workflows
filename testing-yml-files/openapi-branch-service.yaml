@@ -1,0 +1,172 @@
+openapi: 3.0.0
+info:
+  title: retailgenics branch service
+  version: 0.1.0
+  description: This service provides branch details.
+components:
+  schemas:
+    BranchEntity:
+      type: object
+      properties:
+        branchId:
+          type: integer
+          format: int64
+        city:
+          type: string
+        state:
+          type: string
+        zipcode:
+          type: integer
+          format: int64
+        address:
+          type: string
+        country:
+          type: string
+      required:
+        - branchId
+        - city
+        - state
+        - zipcode
+        - country
+        - address
+    BranchRequest:
+      type: object
+      properties:
+        branchId:
+          type: integer
+          format: int64
+        city:
+          type: string
+        state:
+          type: string
+        zipcode:
+          type: integer
+          format: int64
+        address:
+          type: string
+        country:
+          type: string
+      required:
+        - branchId
+        - city
+        - state
+        - zipcode
+        - country
+paths:
+  #branch
+  /branch/{branchId}:
+    get:
+      operationId: getBranchById
+      summary: get Branch details for a given id
+      description: get Branch details for a given id
+      parameters:
+        - in: path
+          name: branchId
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchEntity'
+        '400':
+          description: Bad Request
+      tags:
+        - Branch
+    delete:
+      operationId: deleteBranchById
+      summary: delete Branch details for a given id
+      description: delete Branch details for a given id
+      parameters:
+        - in: path
+          name: branchId
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Branch
+  /branch:
+    post:
+      operationId: createBranch
+      summary: create Branch details
+      description: create Branch details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BranchRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Branch
+    put:
+      operationId: updateBranch
+      summary: update Branch details
+      description: update Branch details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BranchRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      tags:
+        - Branch
+  /branch/all:
+    get:
+      operationId: getAllBranches
+      summary: get all Branches
+      description: get all Branches
+      parameters:
+        - in: query
+          name: branchId
+          schema:
+            type: integer
+            format: int64
+          required: false
+        - in: query
+          name: city
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: state
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: country
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BranchEntity'
+        '400':
+          description: Bad request
+      tags:
+        - Branch

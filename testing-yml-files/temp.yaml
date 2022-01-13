@@ -1,0 +1,53 @@
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+server:
+  port: 28081
+
+security:
+  #database properties
+  database:
+    host: localhost
+    name: random_db
+    password: random
+    port: 3306
+    user: random
+
+  messaging:
+    # kafka producer topics
+    alert:
+      producer:
+        topic: alert-message-topic
+    as-of:
+      corp-action:
+        producer:
+          topic: potential-topic
+
+  #HikariCP properties
+  jdbcUrl: jdbc:mysql://${security.database.host}:${security.database.port}/${security.database.name}?serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+driverClassName: com.mysql.jdbc.Driver
+
+spring:
+  jackson:
+    date-format: com.random.RFC3339DateFormat
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    # remove null properties in jackson serialization
+    default-property-inclusion: NON_NULL
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+  cloud:
+    stream:
+      bindings:
+        # kafka producers
+        alert-out:
+          contentType: application/json
+          destination: ${security.messaging.alert.producer.topic}
+        as-of-corpaction-out:
+          contentType: application/json
+          destination: ${security.messaging.as-of.corp-action.producer.topic}
