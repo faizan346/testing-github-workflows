@@ -1,0 +1,44 @@
+.gradle
+build
+.idea
+
+# Exclude Vaadin prototype generated JavaScript.
+applications/*vaadin*/*.js
+applications/*vaadin*/package.json
+applications/*vaadin*/node_modules
+
+# Ignore OSX directory metadata.
+.DS_Store
+# Ignore .mypy_cache even outside of Python as we use Python based tools.
+.mypy_cache
+# Ignore personal IntelliJ and PyCharm configs
+.idea
+*.iml
+# Ignore Gradle output directory
+.gradle
+# Ignore automatic coverage report files
+.coverage
+coverage.json
+
+# angularjs generates these
+**/node_modules
+**/dist/static
+
+build
+# openapi generator version doc
+java/**/VERSION
+java/**/FILES
+
+.terraform
+.terraform*
+
+# log files
+logs
+.log
+
+# recon files
+data/**/*.inconsistentpositions.csv
+
+# aws cli credentials
+.aws
+credentials
